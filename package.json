@@ -1,0 +1,49 @@
+{
+  "name": "admonkeyv2",
+  "version": "0.1.0",
+  "description": "AdMonkey V2 dApp",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "author": "mike@digitalmediatelford.co.uk",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/preset-env": "7.15.0",
+    "@babel/register": "7.15.3",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@walletconnect/web3-provider": "^1.4.1",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "babel-preset-stage-3": "6.24.1",
+    "bootstrap": "4.3.1",
+    "chai": "4.2.0",
+    "chai-as-promised": "7.1.1",
+    "chai-bignumber": "3.0.0",
+    "date-fns": "^2.22.1",
+    "ethers": "^5.4.5",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "react": "16.8.4",
+    "react-bootstrap": "^1.6.1",
+    "react-dom": "16.8.4",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "^1.1.5",
+    "truffle": "^5.4.6",
+    "web3modal": "^1.9.3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
