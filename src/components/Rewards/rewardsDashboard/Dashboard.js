@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { createTheme } from '@material-ui/core/styles';
 import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
@@ -41,6 +42,23 @@ function Copyright() {
 
 const drawerWidth = 240;
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#1b1b1b',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
+});
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -57,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: "white",
+    backgroundColor: "black",
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -86,7 +104,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    color: "black",
+    color: "white",
+    fontFamily: 'Rubik',
   },
   drawerPaper: {
     position: "relative",
@@ -157,6 +176,7 @@ export default function Dashboard(props) {
         <CssBaseline />
         <AppBar
           position="absolute"
+          className={classes.appBar}
         >
           <Toolbar className={classes.toolbar}>
 
@@ -165,11 +185,11 @@ export default function Dashboard(props) {
             <Typography
               component="h1"
               variant="h6"
-              color="inherit"
+              color="white"
               noWrap
               className={classes.title}
             >
-              <b style={{ color: "#e67e22" }}>Ad</b>Monkey
+              <b style={{ color: "#ffc20d" }}>Ad</b>Monkey
             </Typography>
             <WalletButton
               provider={provider}
@@ -181,7 +201,7 @@ export default function Dashboard(props) {
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <ConnectToWallet isInvalidChain={invalidChain} />
+          <ConnectToWallet isInvalidChain={invalidChain} provider={provider}/>
         </main>
       </div>
     );

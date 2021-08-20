@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Logo from "../../logo.png";
+import WebFont from 'webfontloader';
+import WalletButton from "./buttons/WalletButton";
+import useWeb3Modal from "../../../hooks/useWeb3Modal";
+
+WebFont.load({
+  google: {
+    families: ['Rubik:300,400,700', 'sans-serif']
+  }
+});
 
 const useStyles = makeStyles({
 
   root: {
     display: "flex",
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#eaeaea",
     height: "100%",
+    fontFamily: "Rubik",
   },
   messageContainer: {
     width: "90%",
@@ -20,7 +30,7 @@ const useStyles = makeStyles({
   },
   titleContainer: {
     justifyContent: "center",
-    color: "white",
+    color: "black",
     marginBottom: "40px",
     marginTop: "20px",
   },
@@ -32,6 +42,27 @@ const useStyles = makeStyles({
 export default function ConnectToWallet({ isInvalidChain }) {
   const classes = useStyles();
 
+  const [provider, setProvider] = useState();
+  const [invalidChain, setInvalidChain] = useState();
+  const [chainId, setChainId] = useState(null);
+  const [initialized, setInitialized] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const [_, loadWeb3Modal, logoutOfWeb3Modal] = useWeb3Modal({
+    setChainId: (chainId) => {
+      setChainId(chainId);
+    },
+    setInvalidChain: (isInvalid) => {
+      setInitialized(true);
+      setInvalidChain(isInvalid);
+    },
+    onLoad: (provider, selectedAccount) => {
+      setInitialized(true);
+      setInvalidChain(false);
+      setLoading(false);
+    },
+  });
+
   return (
     <div className={classes.root}>
       <div className={classes.messageContainer}>
@@ -39,11 +70,11 @@ export default function ConnectToWallet({ isInvalidChain }) {
 
         <div className={classes.titleContainer}>
           <h1>
-            Welcome to <b style={{ color: "#e67e22" }}>Ad</b>Monkey
+            Welcome to <b style={{ color: "#ffc20d" }}>Ad</b>Monkey
           </h1>
         </div>
         <div
-          style={{ fontSize: "1.75rem", color: "#e67e22", textAlign: "center" }}
+          style={{ fontSize: "1.75rem", color: "#ffc20d", textAlign: "center" }}
         >
           {isInvalidChain ? "Are you on BSC?" : null}
         </div>
@@ -51,7 +82,7 @@ export default function ConnectToWallet({ isInvalidChain }) {
           <div
             style={{
               fontSize: "1.75rem",
-              color: "white",
+              color: "black",
               textAlign: "center",
               marginBottom: "20px",
             }}
@@ -67,13 +98,13 @@ export default function ConnectToWallet({ isInvalidChain }) {
             alignItems: "center",
             display: "flex",
             flexDirection: "column",
-            color: "white",
+            color: "black",
           }}
         >
           <div
             style={{
               fontSize: "1.25rem",
-              color: "white",
+              color: "black",
               width: "100%",
               textAlign: "center",
             }}
@@ -81,6 +112,12 @@ export default function ConnectToWallet({ isInvalidChain }) {
             {isInvalidChain
               ? "Please switch to BSC Network on your Metamask or TrustWallet"
               : "Please connect your wallet to be able to migrate your V1 tokens to the new V2 contract"}
+
+              <WalletButton
+            provider={provider}
+            loadWeb3Modal={loadWeb3Modal}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+          />
           </div>
         </div>
       </div>

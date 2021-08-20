@@ -9,8 +9,8 @@ export default function WalletButton({
   return (
     <Button
       style={{
-        backgroundColor: "#e67e22",
-        color: "white",
+        backgroundColor: "#ffc20d",
+        color: "black",
         borderRadius: "20px",
       }}
       className="ml-1"
