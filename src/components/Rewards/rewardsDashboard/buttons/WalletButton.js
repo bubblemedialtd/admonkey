@@ -11,9 +11,11 @@ export default function WalletButton({
       style={{
         backgroundColor: "#ffc20d",
         color: "black",
-        borderRadius: "20px",
+        borderRadius: "36px",
+        fontSize: "20px",
+        padding: "4px 40px",
+        fontWeight: "100"
       }}
-      className="ml-1"
       onClick={() => {
         if (!provider) {
           loadWeb3Modal();

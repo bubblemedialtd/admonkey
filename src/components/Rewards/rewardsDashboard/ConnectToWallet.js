@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     fontFamily: "Rubik",
   },
   messageContainer: {
-    width: "90%",
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     justifyItems: "center",
@@ -111,9 +111,19 @@ export default function ConnectToWallet({ isInvalidChain }) {
           >
             {isInvalidChain
               ? "Please switch to BSC Network on your Metamask or TrustWallet"
-              : "Please connect your wallet to be able to migrate your V1 tokens to the new V2 contract"}
+              : "Please connect your wallet to be able to migrate your V1 tokens to the new V2 contract"
+            }
 
-              <WalletButton
+          </div>
+          <div
+            style={{
+              textAlign: "center",
+              display: "block",
+              marginTop: "20px",
+              width: "100%"
+            }}
+          >
+          <WalletButton
             provider={provider}
             loadWeb3Modal={loadWeb3Modal}
             logoutOfWeb3Modal={logoutOfWeb3Modal}
