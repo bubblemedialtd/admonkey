@@ -129,21 +129,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const calculateReflectionReward = (balance, transactions) => {
-  const balanceValue = Number(balance * 10 ** 9);
-  let investment = 0;
-  for (let i = 0; i < transactions.length; i++) {
-    const value = Number(transactions[i].value);
-
-    if (transactions[i].direction == "in") investment += value;
-    else investment -= value;
-  }
-
-  let result = balanceValue - investment;
-  result = result / 10 ** 9;
-  return result;
-};
-
 export default function Dashboard(props) {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -163,20 +148,8 @@ export default function Dashboard(props) {
     claimedRewardTransaction,
   } = props;
 
-  const [open, setOpen] = useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(!open);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   let rfiReward = 0;
 
-  if (balance && transactions.length > 0) {
-    rfiReward = calculateReflectionReward(balance, transactions);
-  }
 
   if (invalidChain || !initialized) {
     return (
@@ -184,21 +157,9 @@ export default function Dashboard(props) {
         <CssBaseline />
         <AppBar
           position="absolute"
-          className={clsx(classes.appBar, open && classes.appBarShift)}
         >
           <Toolbar className={classes.toolbar}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              className={clsx(
-                classes.menuButton,
-                open && classes.menuButtonHidden
-              )}
-            >
-              <MenuIcon />
-            </IconButton>
+
 
             <img src={Logo} className={clsx(classes.logo)} />
             <Typography
@@ -217,24 +178,7 @@ export default function Dashboard(props) {
             />
           </Toolbar>
         </AppBar>
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={open}
-        >
-          <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
 
-          <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
-          <List>{secondaryListItems}</List>
-        </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <ConnectToWallet isInvalidChain={invalidChain} />
@@ -247,21 +191,9 @@ export default function Dashboard(props) {
       <CssBaseline />
       <AppBar
         position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(
-              classes.menuButton,
-              open && classes.menuButtonHidden
-            )}
-          >
-            <MenuIcon />
-          </IconButton>
+
           <img src={Logo} className={clsx(classes.logo)} />
           <Typography
             component="h1"
@@ -279,24 +211,6 @@ export default function Dashboard(props) {
           />
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
-      </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {!claimedRewardTransaction ? null : (

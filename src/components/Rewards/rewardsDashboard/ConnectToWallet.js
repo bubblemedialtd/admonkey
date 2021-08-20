@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import Logo from "../../logo.png";
 
 const useStyles = makeStyles({
+
   root: {
     display: "flex",
-    backgroundColor: "#2c3e50",
+    backgroundColor: "#1a1a1a",
     height: "100%",
   },
   messageContainer: {
@@ -57,7 +58,7 @@ export default function ConnectToWallet({ isInvalidChain }) {
           >
             {isInvalidChain
               ? "You have not connected to Binance Smart Chain network yet"
-              : "You are not connected to your wallet"}
+              : "You are not connected to your wallet!"}
           </div>
         </div>
         <div
@@ -79,7 +80,7 @@ export default function ConnectToWallet({ isInvalidChain }) {
           >
             {isInvalidChain
               ? "Please switch to BSC Network on your Metamask or TrustWallet"
-              : "Please connect your wallet to access your investor dashboard"}
+              : "Please connect your wallet to be able to migrate your V1 tokens to the new V2 contract"}
           </div>
         </div>
       </div>
