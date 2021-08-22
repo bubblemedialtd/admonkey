@@ -30,38 +30,18 @@ const useStyles = makeStyles({
   },
   titleContainer: {
     justifyContent: "center",
-    color: "black",
-    marginBottom: "40px",
+    color: "#000000",
+    marginBottom: "20px",
     marginTop: "20px",
   },
   logo: {
-    width: "20%",
+    width: "25%",
+    maxWidth: "50%"
   },
 });
 
 export default function ConnectToWallet({ isInvalidChain }) {
   const classes = useStyles();
-
-  const [provider, setProvider] = useState();
-  const [invalidChain, setInvalidChain] = useState();
-  const [chainId, setChainId] = useState(null);
-  const [initialized, setInitialized] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  const [_, loadWeb3Modal, logoutOfWeb3Modal] = useWeb3Modal({
-    setChainId: (chainId) => {
-      setChainId(chainId);
-    },
-    setInvalidChain: (isInvalid) => {
-      setInitialized(true);
-      setInvalidChain(isInvalid);
-    },
-    onLoad: (provider, selectedAccount) => {
-      setInitialized(true);
-      setInvalidChain(false);
-      setLoading(false);
-    },
-  });
 
   return (
     <div className={classes.root}>
@@ -81,10 +61,11 @@ export default function ConnectToWallet({ isInvalidChain }) {
         <div>
           <div
             style={{
-              fontSize: "1.75rem",
+              fontSize: "1.2rem",
               color: "black",
               textAlign: "center",
-              marginBottom: "20px",
+              marginBottom: "10px",
+              fontWeight: "bold"
             }}
           >
             {isInvalidChain
@@ -103,7 +84,7 @@ export default function ConnectToWallet({ isInvalidChain }) {
         >
           <div
             style={{
-              fontSize: "1.25rem",
+              fontSize: "1.05rem",
               color: "black",
               width: "100%",
               textAlign: "center",
@@ -123,11 +104,7 @@ export default function ConnectToWallet({ isInvalidChain }) {
               width: "100%"
             }}
           >
-          <WalletButton
-            provider={provider}
-            loadWeb3Modal={loadWeb3Modal}
-            logoutOfWeb3Modal={logoutOfWeb3Modal}
-          />
+ 
           </div>
         </div>
       </div>

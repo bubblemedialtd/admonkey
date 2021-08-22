@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Title from "./Title";
-import BalanceImg from "../images/balance/Balance";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
@@ -21,27 +20,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Balance({ balance }) {
+export default function Balance({ balance, contract }) {
   const classes = useStyles();
   return (
-    <>
+    <div style={{ padding: "40px" }}>
       <div className={classes.centered}>
-        <Title>YOUR BALANCE</Title>
+        <Typography variant="h5" component="h6" style={{ marginBottom: "15px", fontWeight: "100" }}><span style={{ fontSize: "3.2rem", display: "block", color: "#d4d4d4" }}>{contract}</span> Balance</Typography>
       </div>
-      <Grid container spacing={3}>
-        <Grid item xs={3} />
-        <Grid item xs={6}>
-          <BalanceImg />
-        </Grid>
-        <Grid item xs={3} />
-      </Grid>
-      <Typography component="p" variant="h5" className={classes.centered}>
+      <Typography component="p" variant="h5" className={classes.centered} style={{ fontSize: "32px", marginBottom: "20px" }}>
         {`${balance ? balance : 0}`}
       </Typography>
-      <Typography color="textSecondary" className={classes.centered}>
-        $ADMONKEY
-      </Typography>
-    </>
+    </div>
   );
 }
 

@@ -47,18 +47,9 @@ export default function Banner({
   return (
     <div style={matches ? {} : { display: "none" }} className={classes.div1}>
       <div className={classes.div2}>
-        <div className={classes.div3}>Invest in AdMonkey</div>
-        <div style={{ color: "white", fontSize: "1.75rem", marginTop: "20px" }}>
-          Earn <b>BNB</b> and <b>ADMONKEY</b> just by holding
-        </div>
+        <div style={{ fontSize: "1.75rem", color: "white", fontFamily: "Rubik"}} className={classes.div3}>V1 -> V2 Token Exchange</div>
         <div className={classes.div4}>
-          <a
-            className={classes.anchor}
-            target="_blank"
-            href={`https://exchange.pancakeswap.com/#/swap?outputCurrency=${process.env.REACT_APP_CONTRACT_ADDRESS}`}
-          >
-            Buy ADMONKEY
-          </a>
+
         </div>
       </div>
       <div className={classes.div5}>

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: 0, // keep right padding when drawer closed
   },
   toolbarIcon: {
     display: "flex",
@@ -130,15 +130,7 @@ export default function Navbar({ loadWeb3Modal, logoutOfWeb3Modal, provider}) {
         >
           <MenuIcon />
         </IconButton>
-        <Typography
-          component="h1"
-          variant="h6"
-          color="inherit"
-          noWrap
-          className={classes.title}
-        >
-          Investor Dashboard
-        </Typography>
+        
         <WalletButton
           provider={provider}
           loadWeb3Modal={loadWeb3Modal}

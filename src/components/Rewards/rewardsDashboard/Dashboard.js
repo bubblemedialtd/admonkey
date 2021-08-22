@@ -11,6 +11,7 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import Button from '@material-ui/core/Button';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -18,14 +19,23 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications"; // deleteFile
-import { mainListItems, secondaryListItems } from "./listItems";
 import PropTypes from "prop-types";
 import { Banner } from "./banner";
-import Transactions from "./Transactions";
 import WalletButton from "./buttons/WalletButton";
 import Logo from "../../logo.png";
 import ConnectToWallet from "./ConnectToWallet";
 import { BigNumber } from "ethers";
+import Balance from "./Balance";
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import { AccessAlarm, ThreeDRotation } from '@material-ui/icons';
+import Hidden from '@material-ui/core/Hidden';
+import withWidth from '@material-ui/core/withWidth';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import SwapTokensButton from "./buttons/SwapTokensButton";
+import Chip from '@material-ui/core/Chip';
 
 function Copyright() {
   return (
@@ -61,7 +71,7 @@ const theme = createTheme({
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: "flexbox",
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -146,6 +156,22 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 300,
   },
+  dashTitle: {
+    fontFamily: "Rubik",
+    fontSize: "2.1rem",
+    color: "black",
+    marginTop: "40px",
+    textAlign: "center"
+  },
+  gridTable: {
+    flexGrow: 1
+  },
+  logoMain: {
+    display: "block",
+    maxWidth: "40%",
+    textAlign: "center",
+    margin: "45px auto 0 auto"
+  }
 }));
 
 export default function Dashboard(props) {
@@ -153,18 +179,14 @@ export default function Dashboard(props) {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const {
     initialized,
-    reward,
-    onClaimReward,
-    isClaimButtonDisabled,
     balance,
-    nextAvailableClaimDate,
-    transactions,
+    balanceV2,
     invalidChain,
     provider,
     loadWeb3Modal,
     logoutOfWeb3Modal,
     loading,
-    claimedRewardTransaction,
+    selectedAddress
   } = props;
 
   let rfiReward = 0;
@@ -195,6 +217,7 @@ export default function Dashboard(props) {
               provider={provider}
               loadWeb3Modal={loadWeb3Modal}
               logoutOfWeb3Modal={logoutOfWeb3Modal}
+              selectedAddress={selectedAddress}
             />
           </Toolbar>
         </AppBar>
@@ -211,6 +234,7 @@ export default function Dashboard(props) {
       <CssBaseline />
       <AppBar
         position="absolute"
+        className={classes.appBar}
       >
         <Toolbar className={classes.toolbar}>
 
@@ -222,46 +246,64 @@ export default function Dashboard(props) {
             noWrap
             className={classes.title}
           >
-            <b style={{ color: "#e67e22" }}>Ad</b>Monkey
+            <b style={{ color: "#ffc20d" }}>Ad</b>Monkey
           </Typography>
           <WalletButton
-            provider={provider}
-            loadWeb3Modal={loadWeb3Modal}
-            logoutOfWeb3Modal={logoutOfWeb3Modal}
-          />
+              provider={provider}
+              loadWeb3Modal={loadWeb3Modal}
+              logoutOfWeb3Modal={logoutOfWeb3Modal}
+              selectedAddress={selectedAddress}
+            />
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        {!claimedRewardTransaction ? null : (
-          <div
-            style={{
-              backgroundColor: "#e67e22",
-              color: "white",
-              height: "80px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div style={{ fontSize: "1.5rem" }}>
-              Congratulations! Your reward is on its way. Track it on{" "}
-              <a
-                href={`${process.env.REACT_APP_BSCSCAN_BASE_URL}/tx/${claimedRewardTransaction}`}
-              >
-                BSSCAN.
-              </a>
-            </div>
-          </div>
-        )}
-        <Banner balance={balance} reward={reward} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={3} lg={4}>
-              <Paper className={fixedHeightPaper}>
-              </Paper>
+        <img src={Logo} className={clsx(classes.logoMain)} />
+          <div>
+            <Typography
+            component="h1"
+            variant="h4"
+            color="black"
+            noWrap
+            className={classes.dashTitle}
+            >
+            V1/V2 Token Exchange
+            </Typography>
+          </div>
+          <Box component="div" spacing={4} style={{ marginTop: "20px" }}>
+            <Grid container className={classes.gridTable}>
+              <Grid item sm={5} xs={12} style={{ textAlign: "center" }}>
+                <Card variant="outlined">
+                  <Balance balance={balance} contract="V1" />
+                </Card>
+              </Grid>
+              <Grid item sm={2} xs={12} style={{ textAlign: "center", verticalAlign: "center", display: "flex", flexDirection: "column", justifyContent: "center"}}>
+                <Hidden smDown>
+                  <ArrowRightIcon style={{ display: "block", margin: "0 auto", fontSize: "120px", color: "#c3c3c3" }} />
+                </Hidden>
+                <Hidden mdUp>
+                  <ArrowDropDownIcon style={{ display: "block", margin: "0 auto", fontSize: "120px", color: "#c3c3c3" }} />
+                </Hidden>
+              </Grid>
+              <Grid item sm={5} xs={12} style={{ textAlign: "center" }}>
+                <Card variant="outlined">
+                  <Balance balance={balanceV2} contract="V2" />
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
+            <Grid item sm={12} style={{ textAlign: "center" }}>
+              <div>
+                <Typography component="p" color="black" noWrap style={{ marginTop: "20px" }}>
+                  Connected Wallet: 
+                </Typography>
+                <Chip label={selectedAddress} onDelete="" />
+              </div>
+            </Grid>
+            <Grid item sm={12} style={{ textAlign: "center" }}>
+              <SwapTokensButton balance={balance} />
+                
+            </Grid>
+          </Box>
           <Box pt={4}>
             <Copyright />
           </Box>
@@ -272,8 +314,6 @@ export default function Dashboard(props) {
 }
 
 Dashboard.propTypes = {
-  reward: PropTypes.number,
-  nextAvailableClaimDate: PropTypes.instanceOf(Date),
   balance: PropTypes.number,
-  transactions: PropTypes.array,
+  balanceV2: PropTypes.number,
 };
