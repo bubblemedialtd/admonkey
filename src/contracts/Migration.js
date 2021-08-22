@@ -13,6 +13,12 @@ export default class Migration {
 
   async getBalance() {
     if (!this.provider) return;
-    return await this.contract.methods.balanceOf(this.account).call();
+    return await this.contract.methods.getBalanceOfHolder(this.account).call();
+  }
+
+  async transferTokens() {
+    if(!this.provider) return;
+    return await this.contract.methods.transferTokens().send(
+      { from: this.account });
   }
 }

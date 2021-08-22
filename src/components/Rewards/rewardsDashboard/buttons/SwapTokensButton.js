@@ -1,13 +1,13 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
+import Migration from "../../../../contracts/Migration";
 
 export default function SwapTokensButton({
-  balance
+  balance,
+  onSwapTokens
 }) {
-  const handleClick = () => {
-    console.log("Starting token migration")
-  };
+
   return (
     <Button
       style={{
@@ -20,8 +20,9 @@ export default function SwapTokensButton({
         marginTop: "40px"
       }}
       size="large"
-      onClick={handleClick}
-      endIcon={<SwapHorizIcon />}
+      onClick={() => {
+          onSwapTokens();
+        }}      endIcon={<SwapHorizIcon />}
     >
       {balance == 0 ? "Not Available" : "Swap Tokens"}
     </Button>

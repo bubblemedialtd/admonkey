@@ -42,7 +42,8 @@ function useWeb3Modal(config = {}) {
   });
 
   const setProviderEvents = (newProvider) => {
-    newProvider.on("accountsChanged", (accounts) => {
+    newProvider.on("accountsChanged", (accounts: string[]) => {
+
       console.log(accounts);
     });
 

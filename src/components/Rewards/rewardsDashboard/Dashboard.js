@@ -181,15 +181,20 @@ export default function Dashboard(props) {
     initialized,
     balance,
     balanceV2,
+    balanceMigration,
     invalidChain,
     provider,
     loadWeb3Modal,
     logoutOfWeb3Modal,
     loading,
-    selectedAddress
+    selectedAddress,
+    onSwapTokens,
+    swapTokenTransactionId
   } = props;
 
   let rfiReward = 0;
+
+  const balanceToExchange = balanceMigration - balanceV2;
 
 
   if (invalidChain || !initialized) {
@@ -274,7 +279,7 @@ export default function Dashboard(props) {
             <Grid container className={classes.gridTable}>
               <Grid item sm={5} xs={12} style={{ textAlign: "center" }}>
                 <Card variant="outlined">
-                  <Balance balance={balance} contract="V1" />
+                  <Balance balance={balanceMigration} contract="V1" />
                 </Card>
               </Grid>
               <Grid item sm={2} xs={12} style={{ textAlign: "center", verticalAlign: "center", display: "flex", flexDirection: "column", justifyContent: "center"}}>
@@ -296,11 +301,38 @@ export default function Dashboard(props) {
                 <Typography component="p" color="black" noWrap style={{ marginTop: "20px" }}>
                   Connected Wallet: 
                 </Typography>
-                <Chip label={selectedAddress} onDelete="" />
+                <Chip label={selectedAddress} />
+              </div>
+              <div>
+                <Typography component="p" color="black" noWrap style={{ marginTop: "20px" }}>
+                  Balance to migrate:
+                </Typography>
+                <Chip label={ balanceToExchange } />
               </div>
             </Grid>
             <Grid item sm={12} style={{ textAlign: "center" }}>
-              <SwapTokensButton balance={balance} />
+              {!swapTokenTransactionId ? null : (
+                <div
+                  style={{
+                    backgroundColor: "#e67e22",
+                    color: "white",
+                    height: "80px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div style={{ fontSize: "1.5rem" }}>
+                    Congratulations! You have swapped your V1 for V2 tokens. Track it on{" "}
+                    <a
+                      href={`${process.env.REACT_APP_BSCSCAN_BASE_URL}/tx/${swapTokenTransactionId}`}
+                    >
+                      BSSCAN.
+                    </a>
+                  </div>
+                </div>
+              )}
+              <SwapTokensButton balance={balanceMigration} onSwapTokens={onSwapTokens}/>
                 
             </Grid>
           </Box>
@@ -316,4 +348,5 @@ export default function Dashboard(props) {
 Dashboard.propTypes = {
   balance: PropTypes.number,
   balanceV2: PropTypes.number,
+  balanceMigration: PropTypes.number,
 };

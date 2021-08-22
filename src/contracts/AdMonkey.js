@@ -13,6 +13,8 @@ export default class AdMonkey {
 
   async getBalance() {
     if (!this.provider) return;
+    
     return await this.contract.methods.balanceOf(this.account).call();
   }
+
 }
