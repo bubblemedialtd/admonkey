@@ -89,6 +89,8 @@ export default function RewardsContainer() {
 
       setSwapTokensTransactionId(tx.transactionHash);
 
+      window.reload();
+
       console.log(`Transaction hash: ${tx.transactionHash}`);
     }
   }
